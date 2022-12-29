@@ -1,18 +1,23 @@
 import java.util.*
-
+const val SORT_INTEGERS = "-sortIntegers"
 fun main(args: Array<String>) {
     //args[0] = readLine()!!.toString()
-
-    if ("word" in args){
-        SortingTool.readInputsWord()
-        SortingTool.printResultWord()
-    } else if ("long" in args) {
+    if (SORT_INTEGERS in args) {
         SortingTool.readInputsLong()
-        SortingTool.printResultLong()
+        SortingTool.printResultLongSorted()
     } else {
-        SortingTool.readInputsLine()
-        SortingTool.printResultLine()
+        if ("word" in args){
+            SortingTool.readInputsWord()
+            SortingTool.printResultWord()
+        } else if ("long" in args) {
+            SortingTool.readInputsLong()
+            SortingTool.printResultLong()
+        } else {
+            SortingTool.readInputsLine()
+            SortingTool.printResultLine()
+        }
     }
+
 }
 
 object SortingTool {
@@ -61,6 +66,8 @@ object SortingTool {
                 "The greatest number: $greatestNumber ($greatestNumberOccurrences time(s), " +
                 "$percentage%).")
     }
+
+
     fun printResultLong() {
         val greatestNumber = numbersList.maxOrNull() ?: return
         val greatestNumberOccurrences = numbersList.count { it == greatestNumber }
@@ -70,13 +77,18 @@ object SortingTool {
                 "$percentage%).")
     }
 
+    fun printResultLongSorted() {
+        val sortedList = numbersList.sorted()
+        println("Total numbers: ${numbersList.size}.\n" +
+                "Sorted data: ${sortedList.joinToString (" ")}")
+    }
     fun printResultWord() {
         val greatestNumber = numbersListWord.groupBy { it.length }.map {it
         }.sortedBy { it.key }.last().value
         val greatestNumberOccurrences = greatestNumber.size
         val percentage = greatestNumberOccurrences.toDouble() /  numbersListWord.size.toDouble() *100
-        println("Total numbers: ${numbersListWord.size}.\n" +
-                "The greatest number: ${greatestNumber[0]} ($greatestNumberOccurrences time(s), " +
+        println("Total words: ${numbersListWord.size}.\n" +
+                "The longest word: ${greatestNumber[0]} ($greatestNumberOccurrences time(s), " +
                 "$percentage%).")
     }
 
